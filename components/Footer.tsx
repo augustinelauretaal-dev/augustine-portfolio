@@ -117,19 +117,19 @@ export default function Footer() {
 
           {/* Sitemap: Industrial List */}
           <div className="lg:col-span-3 space-y-8">
-            <h4 className="text-sm font-black uppercase tracking-widest border-b-4 border-foreground inline-block">
+            <h4 className="text-xl font-black uppercase italic tracking-tighter border-l-8 border-foreground pl-4 inline-block">
               Sitemap
             </h4>
 
-            <ul className="grid grid-cols-2 gap-y-4 gap-x-8">
+            <ul className="grid grid-cols-1 gap-2">
               {footerLinks.map((link) => (
                 <li key={link.name}>
                   <button
                     onClick={() => handleNavClick(link.id)}
-                    className="text-foreground font-bold uppercase text-sm hover:text-accent-purple transition-colors flex items-center gap-2 group"
+                    className="w-full text-left px-4 py-2 border-2 border-foreground bg-panel font-black uppercase text-xs tracking-widest shadow-[4px_4px_0_0_var(--shadow-color)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 hover:bg-accent-cyan hover:text-black transition-all group flex items-center justify-between"
                   >
-                    <span className="text-accent-purple group-hover:translate-x-1 transition-transform">/</span>
                     {link.name}
+                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={3} />
                   </button>
                 </li>
               ))}
