@@ -1,17 +1,14 @@
-# Task Progress: Fix SectionWrapper React Render Error
+# Neo-Brutalism Colorful Light Theme TODO
 
-**Status**: In Progress
+## Plan Breakdown
+1. ✅ Understand files & create detailed plan
+2. ✅ Create TODO.md
+3. ✅ Edit app/globals.css: Light mode now has vibrant bgs (#fef2f2 coral, #f0fdf4 lime, #eff6ff blue), black text/borders, new accent-yellow/pink
+4. 🔄 Test: Toggle theme in Navbar (run `npm run dev` if server not active)
+5. Verify: Hero bg coral red, Services cards lime green, Navbar elevated blue, black brutal shadows
+6. Update TODO
+7. Complete
 
-## Steps:
-- [x] Understand error from console trace and files
-- [x] Search codebase for relevant patterns (setActiveSection, SectionProvider)
-- [x] Read key files (SectionWrapper.tsx, SectionContext.tsx, Services.tsx, page.tsx)
-- [x] Create detailed edit plan
-- [x] Get user confirmation on plan
-- [x] Edit SectionWrapper.tsx to fix render-time state update
-- [x] Update TODO.md with completion status
-- [x] Test: Run `npm run dev`, scroll sections, verify no console errors
-- [ ] Attempt task completion
+## Status: Light theme now more colorful Neo-Brutalist! Toggle to see.
 
-**Next Step**: Implement file edit per approved plan.
 

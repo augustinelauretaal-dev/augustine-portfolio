@@ -8,110 +8,107 @@ import { ExternalLink, Github } from "lucide-react";
 
 export default function Projects() {
   return (
-    <SectionWrapper id="projects">
+    <SectionWrapper id="projects" className="bg-background">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Header Section */}
-        <div className="text-center mb-20">
+        {/* Header */}
+        <div className="text-center mb-24">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="inline-block px-3 py-1 rounded-full bg-accent-blue/10 border border-accent-blue/20 text-accent-blue text-xs font-bold uppercase tracking-widest mb-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="inline-block px-6 py-2 border-4 border-foreground bg-accent-purple text-white font-black uppercase tracking-widest text-sm mb-6 shadow-neo"
           >
             Portfolio
           </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-6"
+            className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase italic"
           >
-            Crafting Digital <span className="text-foreground/40">Solutions.</span>
+            Crafting Digital <br />
+            <span className="bg-accent-cyan text-black px-4 border-4 border-foreground shadow-neo inline-block mt-2">
+              Solutions
+            </span>
           </motion.h2>
+
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-foreground/50 max-w-2xl mx-auto text-lg leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-foreground font-bold max-w-2xl mx-auto text-xl leading-tight border-b-4 border-foreground pb-4"
           >
-            A curated selection of projects where I blend technical architecture with user-centric design.
+            A curated selection of projects showcasing technical expertise,
+            performance optimization, and modern UI design.
           </motion.p>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="group relative flex flex-col rounded-[2.5rem] overflow-hidden bg-panel/30 border border-white/5 hover:border-accent-purple/30 transition-all duration-500"
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ translateX: -8, translateY: -8 }}
+              className="group relative flex flex-col bg-panel border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all"
             >
-              {/* Image Container */}
-              <div className="relative h-80 w-full overflow-hidden">
-                <motion.div 
-                  className="absolute inset-0 z-10 bg-gradient-to-t from-panel via-panel/20 to-transparent"
-                  initial={{ opacity: 0.6 }}
-                  whileHover={{ opacity: 0.2 }}
+              {/* Image Container: High Contrast */}
+              <div className="relative h-72 w-full border-b-4 border-foreground overflow-hidden">
+                <Image
+                  src={project.image || "/images/project-placeholder.jpg"}
+                  alt={project.title}
+                  fill
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                 />
                 
-                {/* Real Image or Placeholder */}
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full h-full"
-                >
-                  {project.image ? (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-accent-purple/10 to-accent-blue/10 flex items-center justify-center">
-                      <span className="text-foreground/20 font-black text-4xl uppercase tracking-tighter italic">
-                        {project.title.split(' ')[0]}
-                      </span>
-                    </div>
+                {/* External Links as floating bold boxes */}
+                <div className="absolute top-4 right-4 z-20 flex gap-3">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      className="p-3 border-2 border-foreground bg-accent-yellow shadow-[3px_3px_0_0_var(--shadow-color)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                    >
+                      <Github size={20} className="text-black" />
+                    </a>
                   )}
-                </motion.div>
-
-                {/* Top Action Buttons (Hidden by default, shown on hover) */}
-                <div className="absolute top-6 right-6 z-20 flex gap-2 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <a href={project.github} className="p-3 rounded-full bg-background/80 backdrop-blur-md border border-white/10 hover:bg-accent-purple hover:text-white transition-colors">
-                    <Github size={18} />
-                  </a>
-                  <a href={project.link} className="p-3 rounded-full bg-background/80 backdrop-blur-md border border-white/10 hover:bg-accent-blue hover:text-white transition-colors">
-                    <ExternalLink size={18} />
-                  </a>
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      className="p-3 border-2 border-foreground bg-white shadow-[3px_3px_0_0_var(--shadow-color)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+                    >
+                      <ExternalLink size={20} className="text-black" />
+                    </a>
+                  )}
                 </div>
               </div>
 
-              {/* Content Area */}
-              <div className="p-8 md:p-10 pt-0 -mt-12 relative z-20">
+              {/* Content */}
+              <div className="p-8">
                 <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <span className="text-accent-purple text-xs font-bold uppercase tracking-[0.2em] mb-2 block">
-                      {project.category || "Full Stack Development"}
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-accent-purple transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
+                  <span className="px-3 py-1 border-2 border-foreground bg-accent-blue/10 text-accent-blue font-black uppercase text-xs tracking-tighter">
+                    {project.category || "Full Stack"}
+                  </span>
+                  <span className="font-black italic text-foreground/20 text-4xl">0{index + 1}</span>
                 </div>
-                
-                <p className="text-foreground/50 text-lg mb-8 leading-relaxed line-clamp-2">
+
+                <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter italic group-hover:text-accent-purple transition-colors">
+                  {project.title}
+                </h3>
+
+                <p className="text-foreground font-medium text-lg mb-8 leading-tight">
                   {project.description}
                 </p>
-                
-                {/* Technology Tags */}
+
+                {/* Technologies: Tag-style boxes */}
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-1.5 text-xs font-semibold rounded-full bg-white/5 border border-white/10 text-foreground/70 backdrop-blur-md group-hover:border-accent-purple/20 group-hover:bg-accent-purple/5 transition-all"
+                      className="px-3 py-1 text-xs font-black uppercase border-2 border-foreground bg-elevated shadow-[2px_2px_0_0_var(--shadow-color)]"
                     >
                       {tech}
                     </span>

@@ -1,14 +1,41 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight, ArrowUp } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Facebook,
+  Mail,
+  ArrowUpRight,
+  ArrowUp,
+} from "lucide-react";
 import { useSection, type SectionId } from "./SectionContext";
 
 const socialLinks = [
-  { name: "GitHub", icon: Github, href: "https://github.com/yourusername", color: "#6e5494" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/yourusername", color: "#0077b5" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com/yourusername", color: "#1DA1F2" },
-  { name: "Email", icon: Mail, href: "mailto:augustine@portfolio.com", color: "#a855f7" },
+  {
+    name: "GitHub",
+    icon: Github,
+    href: "https://github.com/augustinelauretaal-dev",
+    color: "bg-accent-purple",
+  },
+  {
+    name: "LinkedIn",
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/augustine-laureta-a40057250/",
+    color: "#0077b5", // Keep specific colors if you prefer, or use bg-accent-blue
+  },
+  {
+    name: "Facebook",
+    icon: Facebook,
+    href: "https://www.facebook.com/augustine.laureta_27",
+    color: "bg-accent-blue",
+  },
+  {
+    name: "Email",
+    icon: Mail,
+    href: "mailto:augustinelaureta@gmail.com",
+    color: "bg-accent-cyan",
+  },
 ];
 
 const footerLinks: { name: string; id: SectionId }[] = [
@@ -16,6 +43,8 @@ const footerLinks: { name: string; id: SectionId }[] = [
   { name: "Services", id: "services" },
   { name: "Projects", id: "projects" },
   { name: "Mission", id: "mission" },
+  { name: "Clients", id: "clients" },
+  { name: "FAQ", id: "faq" },
   { name: "Contact", id: "contact" },
 ];
 
@@ -38,49 +67,68 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-background border-t border-white/5 overflow-hidden pt-24 pb-12">
-      {/* Visual Accents */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[1px] bg-gradient-to-r from-transparent via-accent-purple/30 to-transparent" />
-      <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent-blue/10 blur-[120px] rounded-full pointer-events-none" />
+    <footer className="relative bg-background border-t-8 border-foreground overflow-hidden pt-24 pb-12">
+      
+      {/* Decorative Ticker Tape Top Border */}
+      <div className="absolute top-0 left-0 w-full h-8 bg-black flex items-center overflow-hidden whitespace-nowrap">
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="flex gap-10 text-white font-black uppercase text-[10px] tracking-[0.3em]"
+        >
+          {[...Array(10)].map((_, i) => (
+            <span key={i}>Augustine Llanera Laureta • Full Stack Developer • UI/UX Designer •</span>
+          ))}
+        </motion.div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8 mb-20">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
           
-          {/* Brand Column */}
+          {/* Brand & Status Block */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="space-y-4">
+            <div className="space-y-6">
               <motion.button
                 onClick={scrollToTop}
-                className="text-2xl font-black tracking-widest text-foreground group flex items-center gap-2"
+                className="text-5xl font-black tracking-tighter text-foreground uppercase italic group"
               >
-                AUGUSTINE
-                <span className="w-2 h-2 rounded-full bg-accent-purple group-hover:scale-150 transition-transform" />
+                Augustine
+                <span className="inline-block w-4 h-4 bg-accent-purple ml-2 shadow-[2px_2px_0_0_var(--shadow-color)] group-hover:bg-accent-cyan transition-colors border-2 border-foreground" />
               </motion.button>
-              <p className="text-foreground/50 max-w-sm leading-relaxed text-lg">
-                Building digital experiences that combine technical excellence with human-centered design.
+
+              <p className="text-foreground font-bold text-xl uppercase leading-none max-w-md">
+                Designing and developing modern digital experiences focused on performance,
+                scalability, and user-centered design.
               </p>
             </div>
-            
-            <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/30">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+
+            {/* Status: Heavy Badge */}
+            <div className="inline-flex items-center gap-4 px-4 py-2 border-4 border-foreground bg-accent-yellow shadow-neo">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-40"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-black"></span>
               </span>
-              Available for New Projects • 2026
+              <span className="text-xs font-black uppercase tracking-tighter text-black">
+                Available for New Missions
+              </span>
             </div>
           </div>
 
-          {/* Navigation Column */}
-          <div className="lg:col-span-2 space-y-8">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20">Sitemap</h4>
-            <ul className="space-y-4">
+          {/* Sitemap: Industrial List */}
+          <div className="lg:col-span-3 space-y-8">
+            <h4 className="text-sm font-black uppercase tracking-widest border-b-4 border-foreground inline-block">
+              Sitemap
+            </h4>
+
+            <ul className="grid grid-cols-2 gap-y-4 gap-x-8">
               {footerLinks.map((link) => (
                 <li key={link.name}>
                   <button
                     onClick={() => handleNavClick(link.id)}
-                    className="text-foreground/40 hover:text-foreground transition-colors text-sm font-medium flex items-center gap-2 group"
+                    className="text-foreground font-bold uppercase text-sm hover:text-accent-purple transition-colors flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-[1px] bg-accent-purple transition-all group-hover:w-4" />
+                    <span className="text-accent-purple group-hover:translate-x-1 transition-transform">/</span>
                     {link.name}
                   </button>
                 </li>
@@ -88,9 +136,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social Command Center */}
-          <div className="lg:col-span-5 space-y-8">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20 text-left lg:text-right">Connect</h4>
+          {/* Social: Action Grid */}
+          <div className="lg:col-span-4 space-y-8 flex flex-col items-start lg:items-end">
+            <h4 className="text-sm font-black uppercase tracking-widest border-b-4 border-foreground inline-block">
+              Connect
+            </h4>
+
             <div className="flex flex-wrap lg:justify-end gap-4">
               {socialLinks.map((social) => (
                 <motion.a
@@ -98,46 +149,47 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative w-14 h-14 rounded-2xl bg-secondary/30 border border-white/5 flex items-center justify-center overflow-hidden"
-                  whileHover={{ y: -5 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="group relative w-16 h-16 border-4 border-foreground bg-panel flex items-center justify-center shadow-neo hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                  whileTap={{ scale: 0.9 }}
                 >
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                    style={{ backgroundColor: social.color }}
+                  <social.icon
+                    size={24}
+                    strokeWidth={3}
+                    className="text-foreground group-hover:text-accent-purple transition-colors relative z-10"
                   />
-                  <social.icon size={20} className="text-foreground/40 group-hover:text-foreground transition-colors relative z-10" />
-                  <ArrowUpRight size={12} className="absolute top-2 right-2 text-foreground/0 group-hover:text-foreground/40 transition-all" />
+                  <ArrowUpRight
+                    size={14}
+                    strokeWidth={4}
+                    className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
                 </motion.a>
               ))}
             </div>
-            <div className="flex lg:justify-end">
-               <button 
-                onClick={scrollToTop}
-                className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-foreground/40 hover:text-accent-purple transition-colors group"
-              >
-                Back to top 
-                <div className="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center group-hover:border-accent-purple/50">
-                  <ArrowUp size={14} className="group-hover:-translate-y-1 transition-transform" />
-                </div>
-              </button>
-            </div>
+
+            <button
+              onClick={scrollToTop}
+              className="flex items-center gap-3 px-4 py-2 border-4 border-foreground bg-foreground text-background font-black uppercase text-xs hover:bg-accent-purple hover:text-white transition-all shadow-neo"
+            >
+              Back to Top
+              <ArrowUp size={16} strokeWidth={4} />
+            </button>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-bold uppercase tracking-widest text-foreground/20">
-          <div className="flex items-center gap-6">
-            <p>© {new Date().getFullYear()} Augustine Portfolio</p>
-            <span className="w-[1px] h-3 bg-white/10" />
-            <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-          </div>
+        {/* Bottom Ticker/Info */}
+        <div className="pt-10 border-t-4 border-foreground flex flex-col md:flex-row items-center justify-between gap-6">
           
-          <div className="flex items-center gap-2">
-            Built with <span className="text-foreground/40">Next.js</span>
-            <span className="w-1 h-1 rounded-full bg-white/10" />
-            Deployed on <span className="text-foreground/40">Vercel</span>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 font-black uppercase text-[10px]">
+            <p>© {new Date().getFullYear()} Augustine. No Rights Reserved (JK).</p>
+            <a href="/privacy" className="hover:bg-accent-cyan px-1 transition-colors underline decoration-2 underline-offset-2">
+              Privacy Policy
+            </a>
           </div>
+
+          <div className="flex items-center gap-4 font-black uppercase text-[10px] bg-foreground text-background px-4 py-1 border-2 border-foreground">
+            Built with Next.js <span className="w-2 h-2 bg-accent-cyan" /> Deployed on Vercel
+          </div>
+
         </div>
       </div>
     </footer>

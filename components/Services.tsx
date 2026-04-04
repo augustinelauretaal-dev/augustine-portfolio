@@ -7,82 +7,110 @@ import SectionWrapper from "./SectionWrapper";
 
 export default function Services() {
   return (
-    <SectionWrapper id="services">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-        <div className="max-w-2xl">
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="text-accent-blue font-bold tracking-[0.25em] uppercase text-xs mb-4 block"
-          >
-            Expertise
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-black tracking-tight"
-          >
-            Specialized <span className="text-foreground/40">Solutions.</span>
-          </motion.h2>
-        </div>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-foreground/50 max-w-sm text-lg"
-        >
-          Transforming complex requirements into seamless digital products with modern tech stacks.
-        </motion.p>
-      </div>
+    <SectionWrapper id="services" className="bg-background">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
+          <div className="max-w-2xl">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-1 border-4 border-foreground bg-accent-yellow text-black font-black tracking-widest uppercase text-xs mb-4 shadow-neo"
+            >
+              Expertise
+            </motion.span>
 
-      {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {services.map((service, index) => (
-          <motion.div
-            key={service.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic leading-none"
+            >
+              Specialized <br />
+              <span className="text-accent-blue bg-accent-blue/10 px-2 border-4 border-foreground shadow-neo inline-block mt-2">
+                Solutions.
+              </span>
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="group relative p-8 rounded-[2rem] bg-panel/20 border border-white/5 hover:border-accent-blue/30 transition-all duration-500 overflow-hidden"
+            className="text-foreground font-bold max-w-sm text-lg leading-tight border-l-8 border-foreground pl-6"
           >
-            {/* Hover Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <div className="relative z-10">
-              {/* Icon Container */}
-              <div className="relative w-16 h-16 mb-8">
-                <div className="absolute inset-0 bg-accent-blue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative w-full h-full rounded-2xl bg-secondary/50 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500">
-                  <ServiceIcons 
-                    icon={service.icon} 
-                    className="w-8 h-8 text-accent-blue" 
-                    strokeWidth={1.5}
-                  />
+            Transforming complex requirements into scalable, modern digital
+            products built with performance and usability in mind.
+          </motion.p>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                delay: index * 0.1,
+                duration: 0.4,
+              }}
+              whileHover={{ translateX: -6, translateY: -6 }}
+              className="group relative p-8 bg-panel border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all"
+            >
+              {/* Decorative Number: Now bold and outlined */}
+              <span className="absolute top-4 right-4 text-6xl font-black text-foreground/10 group-hover:text-accent-blue/20 transition-colors select-none italic">
+                0{index + 1}
+              </span>
+
+              <div className="relative z-10">
+                {/* Icon: Boxy container */}
+                <div className="relative inline-block mb-8">
+                  <div className="relative w-16 h-16 bg-accent-cyan border-4 border-foreground flex items-center justify-center shadow-neo group-hover:rotate-6 transition-transform">
+                    <ServiceIcons
+                      icon={service.icon}
+                      className="w-8 h-8 text-black"
+                      strokeWidth={2.5}
+                    />
+                  </div>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter group-hover:bg-accent-yellow transition-colors text-foreground group-hover:text-black inline-block px-1">
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-foreground font-medium leading-snug mb-8">
+                  {service.description}
+                </p>
+
+                {/* Features: Tag-style list */}
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Performance",
+                    "Scalable",
+                    "Modern UI"
+                  ].map((item) => (
+                    <span
+                      key={item}
+                      className="px-2 py-1 border-2 border-foreground bg-elevated font-black uppercase text-[10px] tracking-tighter shadow-[3px_3px_0_0_var(--shadow-color)]"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Bottom Accent: Solid Arrow */}
+                <div className="mt-10 flex items-center gap-2 font-black uppercase text-xs tracking-widest text-accent-blue opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-2">
+                  Learn More <span className="text-lg">→</span>
                 </div>
               </div>
-
-              {/* Text Content */}
-              <h3 className="text-2xl font-bold mb-4 tracking-tight group-hover:text-accent-blue transition-colors">
-                {service.title}
-              </h3>
-              
-              <p className="text-foreground/50 leading-relaxed mb-6">
-                {service.description}
-              </p>
-
-              {/* Decorative Feature List (Optional) */}
-              <ul className="space-y-2">
-                {['High Performance', 'Scalable Architecture'].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-foreground/20 group-hover:text-foreground/40 transition-colors">
-                    <div className="w-1 h-1 rounded-full bg-accent-blue/50" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </SectionWrapper>
   );

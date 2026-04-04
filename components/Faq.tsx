@@ -7,75 +7,83 @@ import SectionWrapper from "./SectionWrapper";
 import { Plus, Minus } from "lucide-react";
 
 export default function Faq() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0); // Default open the first one
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <SectionWrapper id="faq">
-      <div className="max-w-4xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-20">
+    <SectionWrapper id="faq" className="bg-background">
+      <div className="max-w-5xl mx-auto px-4">
+        {/* Header: Billboard Style */}
+        <div className="text-center mb-24">
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-accent-purple font-bold tracking-[0.2em] uppercase text-xs mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-4 py-1 border-4 border-foreground bg-accent-blue text-white font-black uppercase tracking-widest text-xs mb-6 shadow-neo"
           >
-            Help Center
+            Questions?
           </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-black tracking-tight mb-6"
+            viewport={{ once: true }}
+            className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase italic"
           >
-            Common Inquiries.
+            Common <span className="text-accent-purple">Inquiries</span>
           </motion.h2>
-          <p className="text-foreground/50 text-lg max-w-xl mx-auto">
-            Everything you need to know about the workflow, pricing, and project timelines.
-          </p>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-foreground font-bold text-xl max-w-xl mx-auto uppercase leading-tight"
+          >
+            Everything you need to know about my workflow, pricing,
+            and project timelines.
+          </motion.p>
         </div>
 
-        {/* FAQ List */}
-        <dl className="space-y-4">
+        {/* FAQ List: Heavy Slabs */}
+        <dl className="space-y-6">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
+
             return (
               <motion.div
                 key={faq.id}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className={`group rounded-3xl border transition-all duration-500 ${
-                  isOpen 
-                  ? "bg-panel/60 border-accent-purple/30 shadow-2xl shadow-accent-purple/5" 
-                  : "bg-panel/20 border-white/5 hover:border-white/10"
+                className={`group border-4 border-foreground transition-all duration-300 shadow-neo ${
+                  isOpen ? "bg-accent-yellow translate-x-1 translate-y-1 shadow-none" : "bg-panel hover:bg-accent-cyan/10"
                 }`}
               >
                 <dt>
                   <button
                     onClick={() => toggle(index)}
-                    className="w-full flex items-center justify-between p-6 md:p-8 text-left outline-none"
+                    className="w-full flex items-center justify-between p-6 md:p-10 text-left group"
                   >
-                    <div className="flex items-center gap-6">
-                      <span className={`text-sm font-mono transition-colors duration-500 ${
-                        isOpen ? "text-accent-purple" : "text-foreground/30"
-                      }`}>
-                        {String(index + 1).padStart(2, '0')}
+                    <div className="flex items-center gap-8">
+                      {/* Number: Bold and Boxy */}
+                      <span className="flex-shrink-0 w-12 h-12 border-4 border-foreground bg-background flex items-center justify-center font-black italic shadow-[3px_3px_0_0_var(--shadow-color)] text-foreground">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className={`text-lg md:text-xl font-bold transition-colors duration-500 ${
-                        isOpen ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"
-                      }`}>
+
+                      {/* Question */}
+                      <span className={`text-xl md:text-2xl font-black uppercase tracking-tighter leading-none ${isOpen ? "text-black" : "text-foreground"}`}>
                         {faq.question}
                       </span>
                     </div>
-                    
-                    <div className={`flex-shrink-0 ml-4 p-2 rounded-full transition-all duration-500 ${
-                      isOpen ? "bg-accent-purple text-white rotate-0" : "bg-white/5 text-foreground/50 rotate-90"
+
+                    {/* Icon: Sharp Square Container */}
+                    <div className={`flex-shrink-0 ml-4 w-10 h-10 border-4 border-foreground flex items-center justify-center transition-colors ${
+                        isOpen ? "bg-black text-white" : "bg-background text-foreground"
                     }`}>
-                      {isOpen ? <Minus size={20} /> : <Plus size={20} />}
+                      {isOpen ? <Minus size={24} strokeWidth={4} /> : <Plus size={24} strokeWidth={4} />}
                     </div>
                   </button>
                 </dt>
@@ -83,23 +91,12 @@ export default function Faq() {
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.dd
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ 
-                        height: "auto", 
-                        opacity: 1,
-                        transition: { 
-                          height: { type: "spring", stiffness: 300, damping: 30 },
-                          opacity: { duration: 0.2, delay: 0.1 } 
-                        }
-                      }}
-                      exit={{ 
-                        height: 0, 
-                        opacity: 0,
-                        transition: { height: { duration: 0.3 }, opacity: { duration: 0.1 } } 
-                      }}
-                      className="overflow-hidden"
+                      initial={{ height: 0 }}
+                      animate={{ height: "auto" }}
+                      exit={{ height: 0 }}
+                      className="overflow-hidden bg-elevated border-t-4 border-foreground"
                     >
-                      <div className="px-14 md:px-20 pb-8 text-foreground/60 leading-relaxed text-lg">
+                      <div className="p-8 md:p-12 text-foreground font-bold text-lg leading-snug">
                         {faq.answer}
                       </div>
                     </motion.dd>
@@ -109,6 +106,25 @@ export default function Faq() {
             );
           })}
         </dl>
+
+        {/* Bottom CTA: High-Visibility Button */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-24"
+        >
+          <p className="font-black uppercase mb-6 tracking-widest">
+            Still have questions?
+          </p>
+
+          <a
+            href="#contact"
+            className="inline-block px-10 py-5 border-4 border-foreground bg-black text-white font-black uppercase text-lg tracking-tighter hover:bg-accent-purple hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0_0_#000] transition-all"
+          >
+            Contact Me →
+          </a>
+        </motion.div>
       </div>
     </SectionWrapper>
   );
