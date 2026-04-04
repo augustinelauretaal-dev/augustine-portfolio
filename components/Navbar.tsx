@@ -106,16 +106,18 @@ export default function Navbar() {
           {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 border-2 border-foreground bg-panel shadow-[3px_3px_0_0_var(--shadow-color)] active:shadow-none active:translate-x-[3px] active:translate-y-[3px] transition-all"
+            className={`p-2 border-2 border-foreground shadow-[3px_3px_0_0_var(--shadow-color)] active:shadow-none active:translate-x-[3px] active:translate-y-[3px] transition-all ${
+              theme === "dark" ? "bg-accent-purple" : "bg-accent-yellow"
+            }`}
           >
             <AnimatePresence mode="wait">
               {theme === "dark" ? (
                 <motion.div key="sun" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }}>
-                  <Sun size={20} className="text-foreground" />
+                  <Sun size={20} className="text-white" />
                 </motion.div>
               ) : (
                 <motion.div key="moon" initial={{ scale: 0.5 }} animate={{ scale: 1 }} exit={{ scale: 0.5 }}>
-                  <Moon size={20} className="text-foreground" />
+                  <Moon size={20} className="text-black" />
                 </motion.div>
               )}
             </AnimatePresence>
