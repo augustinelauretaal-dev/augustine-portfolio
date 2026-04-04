@@ -68,20 +68,10 @@ export default function Navbar() {
           whileHover={{ translateX: -2, translateY: -2 }}
           className="flex items-center gap-3 group"
         >
-          <div className="relative border-2 border-foreground p-1 bg-panel shadow-[2px_2px_0_0_var(--shadow-color)] group-hover:shadow-[4px_4px_0_0_var(--shadow-color)] transition-all">
-            <Image
-              src="/Logo.png"
-              alt="Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
-              priority
-              unoptimized
-            />
-          </div>
           <span className="text-2xl font-black tracking-tighter uppercase italic">
             AUGUSTINE
           </span>
+          <span className="inline-block w-3 h-3 bg-accent-purple ml-2 shadow-[2px_2px_0_0_var(--shadow-color)] group-hover:bg-accent-cyan transition-colors border-2 border-foreground" />
         </motion.button>
 
         {/* Desktop Menu */}
