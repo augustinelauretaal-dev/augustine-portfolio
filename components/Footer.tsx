@@ -181,7 +181,7 @@ export default function Footer() {
           
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 font-black uppercase text-[10px]">
             <p>© {new Date().getFullYear()} Augustine. No Rights Reserved (JK).</p>
-            <a href="/privacy" className="hover:bg-accent-cyan px-1 transition-colors underline decoration-2 underline-offset-2">
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="hover:bg-accent-cyan px-1 transition-colors underline decoration-2 underline-offset-2">
               Privacy Policy
             </a>
           </div>

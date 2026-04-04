@@ -16,7 +16,7 @@ export default function Privacy() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-center mb-24 border-8 border-foreground p-12 bg-accent-purple shadow-[12px_12px_0_0_#000]"
+          className="text-center mb-24 border-8 border-foreground p-12 bg-accent-purple shadow-neo-lg"
         >
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic text-white mb-6">
             Privacy <br /> Protocol
@@ -79,7 +79,7 @@ export default function Privacy() {
               id: "5",
               title: "Cookies",
               icon: Cookie,
-              color: "bg-white",
+              color: "bg-panel",
               content: [
                 "Theme preferences (dark/light mode)",
                 "Smooth scrolling navigation",
@@ -92,7 +92,7 @@ export default function Privacy() {
               initial={{ x: index % 2 === 0 ? -20 : 20, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true }}
-              className="group border-4 border-foreground bg-white shadow-[8px_8px_0_0_#000] overflow-hidden"
+              className="group border-4 border-foreground bg-panel shadow-neo overflow-hidden"
             >
               <div className="flex flex-col md:flex-row">
                 {/* Side Tab */}
@@ -103,13 +103,13 @@ export default function Privacy() {
                 {/* Text Content */}
                 <div className="p-8 flex-1">
                   <h2 className="text-3xl font-black uppercase italic mb-6 flex items-center gap-4">
-                    <span className="text-sm not-italic font-black bg-black text-white px-2 py-1">0{section.id}</span>
+                    <span className="text-sm not-italic font-black bg-foreground text-background px-2 py-1">0{section.id}</span>
                     {section.title}
                   </h2>
                   <ul className="space-y-4">
                     {section.content.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 font-bold uppercase text-sm leading-tight">
-                        <span className="w-2 h-2 bg-black mt-1.5 flex-shrink-0" />
+                      <li key={i} className="flex items-start gap-3 font-bold uppercase text-sm leading-tight text-foreground">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
@@ -123,7 +123,7 @@ export default function Privacy() {
           <motion.section 
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            className="p-12 border-4 border-foreground bg-black text-white text-center shadow-[8px_8px_0_0_#A855F7]"
+            className="p-12 border-4 border-foreground bg-foreground text-background text-center shadow-neo"
           >
             <ShieldCheck size={48} className="mx-auto mb-6 text-accent-cyan" strokeWidth={3} />
             <h2 className="text-4xl font-black uppercase italic mb-4">Integrity Checked</h2>
@@ -132,7 +132,7 @@ export default function Privacy() {
             </p>
             <a 
               href="mailto:augustinelaureta@gmail.com" 
-              className="inline-block px-8 py-4 border-4 border-white bg-white text-black font-black uppercase hover:bg-accent-purple hover:text-white transition-all shadow-[4px_4px_0_0_#A855F7]"
+              className="inline-block px-8 py-4 border-4 border-background bg-background text-foreground font-black uppercase hover:bg-accent-purple hover:text-white transition-all shadow-[4px_4px_0_0_var(--shadow-color)]"
             >
               Email Augustine
             </a>
