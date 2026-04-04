@@ -10,6 +10,14 @@ interface Message {
   content: string;
 }
 
+interface ChatResponse {
+  content: string;
+  mode: "buttons" | "input";
+  options?: string[];
+  inputPlaceholder?: string;
+  context: any;
+}
+
 export default function AiChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -17,6 +25,10 @@ export default function AiChat() {
       content: "Hi! I can help you explore projects, services, or start a new build.",
     },
   ]);
+  const [uiMode, setUiMode] = useState<"buttons" | "input">("buttons");
+  const [options, setOptions] = useState<string[]>(["Projects", "Services", "Start a Project", "About"]);
+  const [inputPlaceholder, setInputPlaceholder] = useState("Type your question...");
+  const [context, setContext] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -29,13 +41,20 @@ export default function AiChat() {
       const response = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        body: JSON.stringify({ 
+          messages: [...messages, userMessage],
+          context: context
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to fetch");
 
-      const data = await response.json();
+      const data: ChatResponse = await response.json();
       setMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
+      setUiMode(data.mode);
+      setOptions(data.options || []);
+      setInputPlaceholder(data.inputPlaceholder || "Type your question...");
+      setContext(data.context);
     } catch (error) {
       setMessages((prev) => [
         ...prev,
@@ -44,6 +63,7 @@ export default function AiChat() {
           content: "Sorry, I'm having trouble connecting right now. Please try again later.",
         },
       ]);
+      setUiMode("input");
     } finally {
       setIsLoading(false);
     }
@@ -53,20 +73,20 @@ export default function AiChat() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, options]);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
-      className="fixed bottom-28 right-8 z-[100] w-[90vw] md:w-[400px] h-[500px] bg-background border-4 border-foreground shadow-neo-lg flex flex-col overflow-hidden"
+      className="fixed bottom-28 right-8 z-[100] w-[90vw] md:w-[400px] h-[550px] bg-background border-4 border-foreground shadow-neo-lg flex flex-col overflow-hidden"
     >
       {/* Header */}
       <div className="bg-accent-purple p-4 border-b-4 border-foreground">
         <h3 className="text-white font-black uppercase italic tracking-wider flex items-center gap-2">
           <span className="w-3 h-3 bg-accent-lime border-2 border-white animate-pulse" />
-          Portfolio Assistant
+          Assistant
         </h3>
       </div>
 
@@ -78,6 +98,22 @@ export default function AiChat() {
         {messages.map((msg, i) => (
           <AiMessage key={i} message={msg} />
         ))}
+        
+        {/* UI Options (Buttons) */}
+        {!isLoading && uiMode === "buttons" && options.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {options.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleSendMessage(option)}
+                className="px-4 py-2 border-2 border-foreground bg-accent-cyan text-black font-black uppercase text-xs shadow-[3px_3px_0_0_var(--shadow-color)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
+
         {isLoading && (
           <div className="flex justify-start mb-4">
             <div className="px-4 py-2 bg-panel border-2 border-foreground shadow-[4px_4px_0_0_var(--shadow-color)]">
@@ -103,8 +139,13 @@ export default function AiChat() {
         )}
       </div>
 
-      {/* Input */}
-      <AiInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      {/* Input - Only shown if mode is input OR forced by user interaction */}
+      <AiInput 
+        onSendMessage={handleSendMessage} 
+        isLoading={isLoading} 
+        placeholder={inputPlaceholder}
+        disabled={uiMode === "buttons" && !isLoading}
+      />
     </motion.div>
   );
 }

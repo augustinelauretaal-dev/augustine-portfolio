@@ -1,30 +1,5 @@
 import { NextResponse } from "next/server";
 
-const PORTFOLIO_KNOWLEDGE = {
-  sections: ["Hero", "Services", "Projects", "Clients", "FAQ", "Contact"],
-  techStack: [
-    "Next.js",
-    "Tailwind CSS",
-    "TypeScript",
-    "Modern UI Design",
-    "POS Systems",
-    "Full-stack Applications"
-  ],
-  services: [
-    "Web Development (React, Next.js, TS)",
-    "UI/UX Design (Modern, Neo-Brutalism)",
-    "Mobile Development",
-    "POS System Architecture",
-    "Full-stack Solutions"
-  ],
-  projects: [
-    "Neo-Brutalism Portfolio",
-    "Modern Portfolio (Ago27)",
-    "BookIt Booking Site",
-    "Government Portal (Next.js + MySQL)"
-  ]
-};
-
 type Intent =
   | "greeting"
   | "projects"
@@ -33,103 +8,127 @@ type Intent =
   | "contact"
   | "about"
   | "start_project"
+  | "pricing"
   | "unknown";
+
+type ChatContext = {
+  lastIntent?: Intent;
+  projectType?: string;
+  interested?: boolean;
+};
+
+const KNOWLEDGE = {
+  projects: [
+    "Neo-Brutalism Portfolio",
+    "Modern Portfolio (Ago27)",
+    "BookIt Booking Site",
+    "Government Portal (Next.js + MySQL)"
+  ],
+  services: [
+    "Web Development",
+    "UI/UX Design",
+    "Mobile Development",
+    "POS System Architecture",
+    "Full-stack Solutions"
+  ],
+  techStack: ["Next.js", "Tailwind CSS", "TypeScript", "Modern UI Design", "POS Systems", "Full-stack Applications"]
+};
 
 function detectIntent(message: string): Intent {
   const msg = message.toLowerCase();
-
-  if (/hi|hello|hey/.test(msg)) return "greeting";
-  if (/project|work|portfolio/.test(msg)) return "projects";
-  if (/service|offer|can you/.test(msg)) return "services";
-  if (/stack|tech|technology|use/.test(msg)) return "tech";
-  if (/contact|hire|reach/.test(msg)) return "contact";
-  if (/about|who are you/.test(msg)) return "about";
-  if (/build|start|create|develop/.test(msg)) return "start_project";
-
+  if (msg.includes("hi") || msg.includes("hello") || msg.includes("hey")) return "greeting";
+  if (msg.includes("project") || msg.includes("work")) return "projects";
+  if (msg.includes("service") || msg.includes("can you do")) return "services";
+  if (msg.includes("stack") || msg.includes("tech") || msg.includes("use")) return "tech";
+  if (msg.includes("contact") || msg.includes("hire") || msg.includes("start")) return "start_project";
+  if (msg.includes("price") || msg.includes("cost") || msg.includes("budget")) return "pricing";
+  if (msg.includes("who are you") || msg.includes("about")) return "about";
   return "unknown";
 }
 
-function generateResponse(intent: Intent) {
+function updateContext(context: ChatContext, intent: Intent, message: string): ChatContext {
+  const newContext = { ...context, lastIntent: intent };
+  if (intent === "start_project") newContext.interested = true;
+  return newContext;
+}
+
+function generateResponse(intent: Intent, context: ChatContext) {
   switch (intent) {
     case "greeting":
       return {
-        content:
-          "Hi! I can help you explore projects, services, or start a new build. What are you looking for?",
-        followUp: true
+        content: "Hi! I can help you explore projects, services, or start a new build.",
+        mode: "buttons",
+        options: ["Projects", "Services", "Start a Project", "About"]
       };
-
     case "projects":
       return {
-        content: `Here are some projects Augustine built:\n\n• ${PORTFOLIO_KNOWLEDGE.projects.join(
-          "\n• "
-        )}\n\nWould you like to see a specific one?`,
-        followUp: true
+        content: `Augustine has built: ${KNOWLEDGE.projects.join(", ")}.`,
+        mode: "buttons",
+        options: ["See Services", "Start a Project", "Contact"]
       };
-
     case "services":
       return {
-        content: `These are the main services offered:\n\n• ${PORTFOLIO_KNOWLEDGE.services.join(
-          "\n• "
-        )}\n\nWhat are you planning to build?`,
-        followUp: true
+        content: `Specialized in: ${KNOWLEDGE.services.join(", ")}.`,
+        mode: "buttons",
+        options: ["See Projects", "Start a Project", "Contact"]
       };
-
     case "tech":
       return {
-        content: `The core tech stack includes:\n\n• ${PORTFOLIO_KNOWLEDGE.techStack.join(
-          "\n• "
-        )}\n\nAre you building something specific?`,
-        followUp: true
+        content: `Stack: ${KNOWLEDGE.techStack.join(", ")}. Focus is performance & UI.`,
+        mode: "buttons",
+        options: ["Projects", "Start a Project"]
       };
-
-    case "contact":
-      return {
-        content:
-          "You can contact Augustine using the contact section below. Would you like help planning your project first?",
-        followUp: true
-      };
-
-    case "about":
-      return {
-        content:
-          "Augustine is a developer specializing in Next.js, Tailwind, and modern UI design. He builds high-performance web apps and POS systems.",
-        followUp: true
-      };
-
     case "start_project":
       return {
-        content:
-          "Great! Let me help you with that.\n\nWhat are you building?\n• Website\n• POS System\n• Dashboard\n• Mobile App",
-        followUp: true
+        content: "Nice 🔥 What are you building?",
+        mode: "buttons",
+        options: ["Landing Page", "E-commerce", "Full System", "Custom App"]
       };
-
-    default:
+    case "pricing":
       return {
-        content:
-          "I can help you with:\n• Projects\n• Services\n• Tech Stack\n• Start a Project\n\nWhat would you like to explore?",
-        followUp: true
+        content: "Pricing depends on complexity. What's your estimated budget?",
+        mode: "input",
+        inputPlaceholder: "e.g. $1,000 - $5,000"
+      };
+    case "about":
+      return {
+        content: "I'm Augustine's AI assistant. I help navigate his work and technical expertise.",
+        mode: "buttons",
+        options: ["Projects", "Services", "Contact"]
+      };
+    default:
+      if (context.interested) {
+        return {
+          content: "Got it. Tell me more about the features or timeline you have in mind.",
+          mode: "input",
+          inputPlaceholder: "Features, timeline, etc."
+        };
+      }
+      return {
+        content: "How can I help you today?",
+        mode: "buttons",
+        options: ["Projects", "Services", "Start a Project"]
       };
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, context = {} } = await req.json();
     const lastMessage = messages[messages.length - 1].content;
 
     const intent = detectIntent(lastMessage);
-    const response = generateResponse(intent);
+    const updatedContext = updateContext(context, intent, lastMessage);
+    const response = generateResponse(intent, updatedContext);
 
+    // Simulate network delay
     await new Promise((resolve) => setTimeout(resolve, 600));
 
     return NextResponse.json({
-      content: response.content,
-      followUp: response.followUp
+      ...response,
+      context: updatedContext
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to process request" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
