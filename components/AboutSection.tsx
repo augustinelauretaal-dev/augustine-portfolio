@@ -55,6 +55,30 @@ export default function AboutSection() {
                   <span>BS Information Technology</span>
                 </div>
               </div>
+              <div className="flex flex-col gap-3 font-bold uppercase text-sm">
+                {/* Skills Section */}
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Frontend Tech</p>
+                <div className="flex flex-wrap gap-3">
+                  {skills.frontend.map((s) => <Badge key={s} text={s} variant="cyan" />)}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Backend & Data</p>
+                <div className="flex flex-wrap gap-3">
+                  {skills.backend.map((s) => <Badge key={s} text={s} variant="purple" />)}
+                </div>
+              </div>
+              <div className="space-y-4">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Core Strengths</p>
+                <div className="flex flex-wrap gap-3">
+                  {skills.other.map((s) => <Badge key={s} text={s} variant="yellow" />)}
+                </div>
+              </div>
+            </div>
+
+              </div>
             </div>
           </motion.div>
 
@@ -104,27 +128,25 @@ export default function AboutSection() {
                   </li>
                 </ul>
               </div>
-            </div>
 
-            {/* Skills Section */}
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Frontend Tech</p>
-                <div className="flex flex-wrap gap-3">
-                  {skills.frontend.map((s) => <Badge key={s} text={s} variant="cyan" />)}
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Backend & Data</p>
-                <div className="flex flex-wrap gap-3">
-                  {skills.backend.map((s) => <Badge key={s} text={s} variant="purple" />)}
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Core Strengths</p>
-                <div className="flex flex-wrap gap-3">
-                  {skills.other.map((s) => <Badge key={s} text={s} variant="yellow" />)}
-                </div>
+              <div className="p-8 border-4 border-foreground bg-panel shadow-neo relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-blue/10 -mr-12 -mt-12 rounded-full" />
+                <h5 className="text-xl font-black uppercase">Data Processor</h5>
+                <p className="text-sm font-bold text-accent-blue mb-4">Philippine Statistics Authority (POPCEN CBMS)</p>
+                <ul className="space-y-2 font-bold text-sm uppercase">
+                  <li className="flex items-start gap-2">
+                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                    Managed data collection teams
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                    Ensured accuracy and completeness of data
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                    Trained team members and validated submissions
+                  </li>
+                </ul>
               </div>
             </div>
 
@@ -139,8 +161,15 @@ export default function AboutSection() {
                 <Download size={24} strokeWidth={3} />
                 Download Resume
               </motion.a>
+
               <motion.a
-                href="#contact"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
                 whileHover={{ translateX: -4, translateY: -4 }}
                 className="group flex items-center gap-3 px-8 py-4 bg-white text-black border-4 border-foreground font-black text-lg uppercase shadow-neo transition-all"
               >
