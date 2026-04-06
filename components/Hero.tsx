@@ -78,7 +78,7 @@ export default function Hero() {
               </span>
             </motion.a>
 
-            <motion.a
+            {/*<motion.a
               href="/Resume/AUGUSTINE LLANERA LAURETA.pdf"
               download
               whileHover={{ translateX: -4, translateY: -4 }}
@@ -86,7 +86,7 @@ export default function Hero() {
             >
               <Download size={24} strokeWidth={3} />
               Resume
-            </motion.a>
+            </motion.a> */}
           </div>
         </motion.div>
       </div>

@@ -11,9 +11,9 @@ const navLinks: { name: string; href: SectionId }[] = [
   { name: "Home", href: "home" },
   { name: "Services", href: "services" },
   { name: "Projects", href: "projects" },
+  { name: "About", href: "about" },
   { name: "Mission", href: "mission" },
-  { name: "Clients", href: "clients" },
-  { name: "Faq", href: "faq" },
+  { name: "FAQ", href: "faq" },
   { name: "Contact", href: "contact" },
 ];
 

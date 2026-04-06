@@ -10,7 +10,7 @@ import {
 } from "react";
 
 // Define strict section IDs to prevent typos across the app
-export type SectionId = "home" | "services" | "projects" | "mission" | "clients" | "faq" | "contact" | "";
+export type SectionId = "home" | "services" | "projects" | "about" | "mission" | "clients" | "faq" | "contact" | "";
 
 interface SectionContextType {
   activeSection: SectionId;
