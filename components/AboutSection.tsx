@@ -109,44 +109,77 @@ export default function AboutSection() {
               <h4 className="text-2xl font-black uppercase italic flex items-center gap-3">
                 <Briefcase className="text-accent-yellow" /> Experience
               </h4>
-              <div className="p-8 border-4 border-foreground bg-panel shadow-neo relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-blue/10 -mr-12 -mt-12 rounded-full" />
-                <h5 className="text-xl font-black uppercase">Team Supervisor</h5>
-                <p className="text-sm font-bold text-accent-blue mb-4">Philippine Statistics Authority (POPCEN CBMS)</p>
-                <ul className="space-y-2 font-bold text-sm uppercase">
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Managed data collection teams
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Ensured accuracy and completeness of data
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Trained team members and validated submissions
-                  </li>
-                </ul>
-              </div>
 
-              <div className="p-8 border-4 border-foreground bg-panel shadow-neo relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-accent-blue/10 -mr-12 -mt-12 rounded-full" />
-                <h5 className="text-xl font-black uppercase">Data Processor</h5>
-                <p className="text-sm font-bold text-accent-blue mb-4">Philippine Statistics Authority (POPCEN CBMS)</p>
-                <ul className="space-y-2 font-bold text-sm uppercase">
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Managed data collection teams
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Ensured accuracy and completeness of data
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
-                    Trained team members and validated submissions
-                  </li>
-                </ul>
+              <div className="relative border-l-8 border-foreground pl-8 space-y-12">
+
+                {/* Team Supervisor */}
+                <div className="relative">
+                  <div className="absolute -left-[42px] top-0 w-6 h-6 bg-accent-yellow border-4 border-foreground" />
+                  
+                  <div className="p-8 border-4 border-foreground bg-panel shadow-neo relative overflow-hidden">
+                    <h5 className="text-xl font-black uppercase">
+                      Team Supervisor
+                    </h5>
+
+                    <p className="text-sm font-bold text-accent-blue mb-1">
+                      Philippine Statistics Authority (POPCEN CBMS)
+                    </p>
+
+                    <p className="text-xs font-black uppercase text-foreground/50 mb-4">
+                      September 2024 — November 2024
+                    </p>
+
+                    <ul className="space-y-2 font-bold text-sm uppercase">
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Managed data collection teams
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Ensured accuracy and completeness of data
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Trained team members and validated submissions
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Data Processor */}
+                <div className="relative">
+                  <div className="absolute -left-[42px] top-0 w-6 h-6 bg-accent-purple border-4 border-foreground" />
+                  
+                  <div className="p-8 border-4 border-foreground bg-panel shadow-neo relative overflow-hidden">
+                    <h5 className="text-xl font-black uppercase">
+                      Data Processor
+                    </h5>
+
+                    <p className="text-sm font-bold text-accent-blue mb-1">
+                      Philippine Statistics Authority (POPCEN CBMS)
+                    </p>
+
+                    <p className="text-xs font-black uppercase text-foreground/50 mb-4">
+                      November 2024 — March 2025
+                    </p>
+
+                    <ul className="space-y-2 font-bold text-sm uppercase">
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Processed and validated census data
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Maintained data accuracy and integrity
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-foreground mt-1.5 flex-shrink-0" />
+                        Coordinated with field teams
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
               </div>
             </div>
 

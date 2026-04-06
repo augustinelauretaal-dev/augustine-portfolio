@@ -1,15 +1,39 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import SectionWrapper from "./SectionWrapper";
 import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Fix hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock scroll
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedProject]);
+
   return (
     <SectionWrapper id="projects" className="bg-background">
       <div className="max-w-7xl mx-auto px-6">
+
         {/* Header */}
         <div className="text-center mb-24">
           <motion.div
@@ -23,7 +47,6 @@ export default function Projects() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
             className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase italic"
           >
             Crafting Digital <br />
@@ -52,73 +75,167 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ translateX: -8, translateY: -8 }}
-              className="group relative flex flex-col bg-panel border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all"
+              onClick={() => setSelectedProject(project)}
+              className="cursor-pointer group relative flex flex-col bg-panel border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all"
             >
-              {/* Image Container: High Contrast */}
+              {/* Image */}
               <div className="relative h-72 w-full border-b-4 border-foreground overflow-hidden">
                 <Image
-                  src={project.image || "/images/project-placeholder.jpg"}
+                  src={project.image}
                   alt={project.title}
                   fill
                   className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                 />
-                
-                {/* External Links as floating bold boxes */}
-                <div className="absolute top-4 right-4 z-20 flex gap-3">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      className="p-3 border-2 border-foreground bg-accent-yellow shadow-[3px_3px_0_0_var(--shadow-color)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
-                    >
-                      <Github size={20} className="text-black" />
-                    </a>
-                  )}
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      className="p-3 border-2 border-foreground bg-white shadow-[3px_3px_0_0_var(--shadow-color)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
-                    >
-                      <ExternalLink size={20} className="text-black" />
-                    </a>
-                  )}
-                </div>
               </div>
 
               {/* Content */}
               <div className="p-8">
                 <div className="flex justify-between items-start mb-4">
-                  <span className="px-3 py-1 border-2 border-foreground bg-accent-blue/10 text-accent-blue font-black uppercase text-xs tracking-tighter">
+                  <span className="px-3 py-1 border-2 border-foreground bg-accent-blue/10 text-accent-blue font-black uppercase text-xs shadow-[3px_3px_0_0_var(--shadow-color)]">
                     {project.category || "Full Stack"}
                   </span>
-                  <span className="font-black italic text-foreground/20 text-4xl">0{index + 1}</span>
+
+                  <span className="font-black italic text-foreground/20 text-4xl">
+                    0{index + 1}
+                  </span>
                 </div>
 
-                <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter italic group-hover:text-accent-purple transition-colors">
+                <h3 className="text-3xl font-black mb-4 uppercase italic">
                   {project.title}
                 </h3>
 
-                <p className="text-foreground font-medium text-lg mb-8 leading-tight">
+                <p className="text-foreground font-medium text-lg mb-6">
                   {project.description}
                 </p>
 
-                {/* Technologies: Tag-style boxes */}
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs font-black uppercase border-2 border-foreground bg-elevated shadow-[2px_2px_0_0_var(--shadow-color)]"
+                      className="px-2 py-1 border-2 border-foreground bg-elevated font-black uppercase text-[10px] tracking-tighter shadow-[3px_3px_0_0_var(--shadow-color)]"
                     >
                       {tech}
                     </span>
                   ))}
+                </div>
+
+                <div className="mt-6 font-black uppercase text-sm text-accent-purple">
+                  View Case Study →
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Modal Portal */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {selectedProject && (
+              <motion.div
+                className="fixed inset-0 z-[999999] bg-black/80 flex items-center justify-center p-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedProject(null)}
+              >
+                <motion.div
+                  className="bg-background max-w-4xl w-full border-4 border-foreground shadow-neo-lg relative max-h-[90vh] overflow-y-auto"
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.9 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="absolute top-4 right-4 z-[1000000] p-3 border-2 border-foreground shadow-neo bg-accent-yellow text-black transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2"
+                  >
+                    <X size={20} />
+                  </button>
+
+                  {/* Image */}
+                  <div className="relative h-80 border-b-4 border-foreground">
+                    <Image
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="p-8 space-y-8">
+
+                    <h2 className="text-4xl font-black uppercase">
+                      {selectedProject.title}
+                    </h2>
+
+                    <div>
+                      <h4 className="font-black uppercase mb-2">Problem</h4>
+                      <p>{selectedProject.problem}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-black uppercase mb-2">Solution</h4>
+                      <p>{selectedProject.solution}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-black uppercase mb-2">Features</h4>
+                      <ul className="space-y-2">
+                        {selectedProject.features?.map((f: any) => (
+                          <li key={f}>• {f}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-black uppercase mb-2">Tech Stack</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedProject.technologies.map((tech: any) => (
+                          <span
+                            key={tech}
+                            className="px-2 py-1 border-2 border-foreground bg-elevated font-black uppercase text-[10px] tracking-tighter shadow-[3px_3px_0_0_var(--shadow-color)]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-6">
+                      {selectedProject.github && (
+                        <a
+                          href={selectedProject.github}
+                          target="_blank"
+                          className="flex items-center gap-2 px-6 py-3 border-4 border-foreground bg-accent-yellow font-black uppercase"
+                        >
+                          <Github />
+                          Github
+                        </a>
+                      )}
+
+                      {selectedProject.link && (
+                        <a
+                          href={selectedProject.link}
+                          target="_blank"
+                          className="flex items-center gap-2 px-6 py-3 border-4 border-foreground bg-accent-cyan font-black uppercase shadow-neo transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2"
+                        >
+                          <ExternalLink size={18} />
+                          Live Demo
+                        </a>
+                      )}
+                    </div>
+
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
+
     </SectionWrapper>
   );
 }

@@ -119,7 +119,13 @@ export default function Faq() {
           </p>
 
           <a
-            href="#contact"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="inline-block px-10 py-5 border-4 border-foreground bg-black text-white font-black uppercase text-lg tracking-tighter hover:bg-accent-purple hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[8px_8px_0_0_#000] transition-all"
           >
             Contact Me →
