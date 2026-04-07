@@ -17,25 +17,24 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Neo-Brutalism Portfolio",
-    description: "A portfolio website with neo-brutalism design using next.js tailwind",
-    image: "/Image/project-placeholder-1.png",
-    link: "https://neo-brutalism-blush.vercel.app/",
-    technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    category: "Frontend",
+    title: "Neo-Store E-commerce",
+    description: "A modern Neo-Brutalism E-commerce platform featuring bold UI, product collections, cart functionality, and responsive design built with Next.js and Tailwind CSS.",
+    image: "/Image/project-placeholder-5.png",
+    link: "https://e-com-hazel-sigma.vercel.app/",
+    technologies: ["Next.js", "Tailwind CSS", "MySQL"],
+    category: "E-commerce",
 
     problem:
-      "Needed a unique portfolio design that stands out from typical developer portfolios.",
+      "Government agencies needed a centralized portal for managing services.",
 
     solution:
-      "Implemented Neo-Brutalism design with bold typography, strong borders, and modern UI interactions.",
+      "Developed a full-stack portal with MySQL database and admin dashboard.",
 
     features: [
-      "Responsive Design",
-      "Smooth Animations",
-      "Modern UI",
-      "SEO Optimized",
-      "Fast Performance"
+      "Admin Dashboard",
+      "User Management",
+      "Service Portal",
+      "Database Integration"
     ]
   },
 

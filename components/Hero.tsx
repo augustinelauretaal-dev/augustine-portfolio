@@ -70,13 +70,25 @@ export default function Hero() {
               href="#projects"
               onClick={(e) => handleScroll(e, "#projects")}
               whileHover={{ translateX: -4, translateY: -4 }}
-              className="group relative px-10 py-5 bg-accent-yellow text-black border-4 border-foreground font-black text-xl uppercase shadow-neo hover:shadow-neo-lg transition-all"
+              className="group relative px-10 py-5 bg-accent-yellow text-black border-4 border-foreground font-black text-xl uppercase shadow-neo hover:shadow-neo-lg transition-all "
             >
               <span className="flex items-center gap-2">
                 View Projects
                 <ArrowRight size={24} strokeWidth={3} />
               </span>
             </motion.a>
+
+            {/*<motion.a
+              href="#about"
+              onClick={(e) => handleScroll(e, "#about")}
+              whileHover={{ translateX: -4, translateY: -4 }}
+              className="group relative px-10 py-5 bg-accent-yellow text-black border-4 border-foreground font-black text-xl uppercase shadow-neo hover:shadow-neo-lg transition-all "
+            >
+              <span className="flex items-center gap-2">
+                About Me
+                <ArrowRight size={24} strokeWidth={3} />
+              </span>
+            </motion.a> */}
 
             {/*<motion.a
               href="/Resume/AUGUSTINE LLANERA LAURETA.pdf"
