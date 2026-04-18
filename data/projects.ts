@@ -175,24 +175,24 @@ export const projects: Project[] = [
   },
 
   {
-      "id": 8,
-      "title": "King James Portfolio",
-      "description": "A dynamic tribute website celebrating the career, statistics, and legacy of LeBron James with a modern, responsive design.",
-      "image": "/Image/project-placeholder-9.png",
-      "link": "https://lebron-james-bdbm.vercel.app/",
-      "technologies": ["Next.js", "Tailwind CSS"],
-      "category": "Frontend",
+    "id": 8,
+    "title": "Crystal Waves Hotel & Resort",
+    "description": "A luxury hotel and resort website offering a premium coastal escape in Nueva Ecija, featuring suite booking, gallery, and amenities showcase.",
+    "image": "/Image/project-placeholder-9.png",
+    "link": "https://crystal-waves-71wz.vercel.app/",
+    "technologies": ["Next.js", "Tailwind CSS"],
+    "category": "Full Stack",
 
-      "problem": "Fans and sports enthusiasts needed a centralized, interactive visual hub to explore the extensive career milestones and highlights of LeBron James.",
+    "problem": "Travelers needed a centralized, elegant platform to explore luxury accommodations, view resort amenities, and initiate booking inquiries seamlessly.",
 
-      "solution": "Created an immersive tribute portal featuring a career timeline, interactive statistics, highlight reels, and a photo gallery to document his professional journey.",
+    "solution": "Developed a responsive, high-end resort website with a suite reservation system, interactive visual gallery, and detailed information on exclusive resort offerings.",
 
-      "features": [
-        "Interactive Career Timeline",
-        "Achievement & Honors Showcase",
-        "Video Highlight Integration",
-        "Photo Gallery",
-        "Responsive Performance-Optimized UI"
-      ]
+    "features": [
+      "Suite Booking & Inquiry System",
+      "Interactive Resort Gallery",
+      "Amenities Showcase",
+      "Reservation Request Form",
+      "Responsive, Luxury-Focused UI"
+    ]
   }
 ];
