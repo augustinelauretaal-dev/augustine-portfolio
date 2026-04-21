@@ -4,20 +4,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/data/projects";
 import SectionWrapper from "./SectionWrapper";
 import Image from "next/image";
-import { ExternalLink, Github, X } from "lucide-react";
+import { ExternalLink, Github, X, ArrowUpRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import SectionTitle from "./Reusable/SectionTitle";
+import Badge from "./Reusable/Badge";
+import SectionContainer from "./Reusable/SectionContainer";
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [mounted, setMounted] = useState(false);
 
-  // Fix hydration
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Lock scroll
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -31,41 +32,32 @@ export default function Projects() {
   }, [selectedProject]);
 
   return (
-    <SectionWrapper id="projects" className="bg-background">
-      <div className="max-w-7xl mx-auto px-6">
+    <SectionWrapper id="projects" className="bg-background overflow-hidden" glow fullWidth>
+      <div className="absolute top-0 right-0 w-1/3 h-full border-l-2 border-foreground/5 pointer-events-none hidden lg:block" />
+      <div className="absolute top-1/2 left-0 w-full h-px border-t-2 border-foreground/5 pointer-events-none" />
 
-        {/* Header */}
-        <div className="text-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="inline-block px-6 py-2 border-4 border-foreground bg-accent-purple text-white font-black uppercase tracking-widest text-sm mb-6 shadow-neo"
-          >
-            Portfolio
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase italic"
-          >
-            Crafting Digital <br />
-            <span className="bg-accent-cyan text-black px-4 border-4 border-foreground shadow-neo inline-block mt-2">
-              Solutions
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-foreground font-bold max-w-2xl mx-auto text-xl leading-tight border-b-4 border-foreground pb-4"
-          >
-            A curated selection of projects showcasing technical expertise,
-            performance optimization, and modern UI design.
-          </motion.p>
+      <SectionContainer>
+        <div className="mb-20">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b-8 border-foreground pb-12">
+            <div className="max-w-3xl">
+              <SectionTitle
+                subtitle="Selected Works"
+                title="Building the Future"
+                align="left"
+              />
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-2xl font-bold leading-tight max-w-xl text-foreground/80 italic"
+              >
+                A high-performance showcase of technical excellence and modern digital experiences.
+              </motion.p>
+            </div>
+          </div>
         </div>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {projects.map((project, index) => (
             <motion.div
@@ -78,7 +70,6 @@ export default function Projects() {
               onClick={() => setSelectedProject(project)}
               className="cursor-pointer group relative flex flex-col bg-panel border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all"
             >
-              {/* Image */}
               <div className="relative h-72 w-full border-b-4 border-foreground overflow-hidden">
                 <Image
                   src={project.image}
@@ -88,7 +79,6 @@ export default function Projects() {
                 />
               </div>
 
-              {/* Content */}
               <div className="p-8">
                 <div className="flex justify-between items-start mb-4">
                   <span className="px-3 py-1 border-2 border-foreground bg-accent-blue/10 text-accent-blue font-black uppercase text-xs shadow-[3px_3px_0_0_var(--shadow-color)]">
@@ -126,9 +116,8 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </SectionContainer>
 
-      {/* Modal Portal */}
       {mounted &&
         createPortal(
           <AnimatePresence>
@@ -147,7 +136,6 @@ export default function Projects() {
                   exit={{ scale: 0.9 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Close Button */}
                   <button
                     onClick={() => setSelectedProject(null)}
                     className="absolute top-4 right-4 z-[1000000] p-3 border-2 border-foreground shadow-neo bg-accent-yellow text-black transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none active:translate-x-2 active:translate-y-2"
@@ -155,7 +143,6 @@ export default function Projects() {
                     <X size={20} />
                   </button>
 
-                  {/* Image */}
                   <div className="relative h-80 border-b-4 border-foreground">
                     <Image
                       src={selectedProject.image}
@@ -166,7 +153,6 @@ export default function Projects() {
                   </div>
 
                   <div className="p-8 space-y-8">
-
                     <h2 className="text-4xl font-black uppercase">
                       {selectedProject.title}
                     </h2>
@@ -194,12 +180,7 @@ export default function Projects() {
                       <h4 className="font-black uppercase mb-2">Tech Stack</h4>
                       <div className="flex flex-wrap gap-2">
                         {selectedProject.technologies.map((tech: any) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 border-2 border-foreground bg-elevated font-black uppercase text-[10px] tracking-tighter shadow-[3px_3px_0_0_var(--shadow-color)]"
-                          >
-                            {tech}
-                          </span>
+                          <Badge key={tech} text={tech} variant="yellow" />
                         ))}
                       </div>
                     </div>
@@ -227,7 +208,6 @@ export default function Projects() {
                         </a>
                       )}
                     </div>
-
                   </div>
                 </motion.div>
               </motion.div>
@@ -235,7 +215,6 @@ export default function Projects() {
           </AnimatePresence>,
           document.body
         )}
-
     </SectionWrapper>
   );
 }

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionWrapper from "./SectionWrapper";
+import SectionContainer from "./Reusable/SectionContainer";
 import emailjs from '@emailjs/browser';
-import { Send, Mail, Phone, MapPin, CheckCircle2, ArrowRight } from "lucide-react";
+import { Send, Mail, Phone, MapPin, CheckCircle2, ArrowRight, Loader2, AlertCircle, X } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -13,32 +14,75 @@ export default function Contact() {
     message: "",
   });
 
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot check
+    if (honeypot) {
+      console.log("Spam detected");
+      return;
+    }
+
+    // Validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setErrorMessage("All fields are required");
+      setStatus("error");
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      setErrorMessage("Please enter a valid email address");
+      setStatus("error");
+      return;
+    }
+
+    if (formData.message.length < 10) {
+      setErrorMessage("Message must be at least 10 characters long");
+      setStatus("error");
+      return;
+    }
+
     setStatus("submitting");
+    setErrorMessage("");
 
     try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS configuration missing");
+      }
+
       await emailjs.send(
-        'service_liov3qw', 
-        'template_yz88ezv', 
+        serviceId,
+        templateId,
         {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
         },
-        'GOjdrBDz-a67L6_UM'
+        publicKey
       );
+      
       setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+      
+      // Reset status after 5 seconds
+      setTimeout(() => setStatus("idle"), 5000);
     } catch (error) {
       console.error('EmailJS error:', error);
-      setStatus("idle");
-      alert('Failed to send message. Please try again.');
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Failed to send message. Please try again.");
     }
-
-    setFormData({ name: "", email: "", message: "" });
-    setTimeout(() => setStatus("idle"), 5000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,8 +91,7 @@ export default function Contact() {
 
   return (
     <SectionWrapper id="contact" className="bg-background">
-      <div className="max-w-7xl mx-auto px-6">
-
+      <SectionContainer>
         {/* Header: Industrial Billboard */}
         <div className="text-center mb-24">
           <motion.div
@@ -144,6 +187,17 @@ export default function Contact() {
                     exit={{ opacity: 0 }}
                   >
                     <div className="grid md:grid-cols-2 gap-8">
+                      {/* Honeypot field - Hidden */}
+                      <div className="hidden">
+                        <input
+                          type="text"
+                          name="website"
+                          value={honeypot}
+                          onChange={(e) => setHoneypot(e.target.value)}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </div>
                       <div className="space-y-3">
                         <label className="text-sm font-black uppercase tracking-tighter">Full Name</label>
                         <input
@@ -184,14 +238,38 @@ export default function Contact() {
                       />
                     </div>
 
+                    <AnimatePresence>
+                      {status === "error" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="flex items-center gap-4 p-4 border-4 border-foreground bg-accent-red text-white shadow-neo"
+                        >
+                          <AlertCircle className="shrink-0 w-6 h-6" />
+                          <p className="font-black uppercase text-sm flex-grow">{errorMessage}</p>
+                          <button 
+                            type="button" 
+                            onClick={() => setStatus("idle")}
+                            className="p-1 hover:bg-white/20 transition-colors"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
                     <motion.button
                       whileHover={{ translateX: -4, translateY: -4 }}
                       type="submit"
                       disabled={status === "submitting"}
-                      className="group relative w-full py-6 bg-accent-yellow text-black border-4 border-foreground font-black text-2xl uppercase shadow-neo hover:shadow-neo-lg transition-all flex items-center justify-center gap-4 disabled:opacity-50"
+                      className="group relative w-full py-6 bg-accent-yellow text-black border-4 border-foreground font-black text-2xl uppercase shadow-neo hover:shadow-neo-lg transition-all flex items-center justify-center gap-4 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === "submitting" ? (
-                        "Transmitting..."
+                        <>
+                          <Loader2 className="w-8 h-8 animate-spin" strokeWidth={4} />
+                          Transmitting...
+                        </>
                       ) : (
                         <>
                           Send Message
@@ -205,7 +283,7 @@ export default function Contact() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </SectionContainer>
     </SectionWrapper>
   );
 }

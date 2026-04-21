@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -26,7 +26,6 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20"
     >
-      {/* Local grid removed - global now */}
       {/* Decorative Background Shapes */}
       <div className="absolute top-20 left-10 w-32 h-32 border-4 border-foreground bg-accent-purple shadow-neo -rotate-12 hidden md:block" />
       <div className="absolute bottom-20 right-10 w-40 h-40 border-4 border-foreground bg-accent-cyan shadow-neo rotate-12 hidden md:block" />
@@ -77,28 +76,6 @@ export default function Hero() {
                 <ArrowRight size={24} strokeWidth={3} />
               </span>
             </motion.a>
-
-            {/*<motion.a
-              href="#about"
-              onClick={(e) => handleScroll(e, "#about")}
-              whileHover={{ translateX: -4, translateY: -4 }}
-              className="group relative px-10 py-5 bg-accent-yellow text-black border-4 border-foreground font-black text-xl uppercase shadow-neo hover:shadow-neo-lg transition-all "
-            >
-              <span className="flex items-center gap-2">
-                About Me
-                <ArrowRight size={24} strokeWidth={3} />
-              </span>
-            </motion.a> */}
-
-            {/*<motion.a
-              href="/Resume/AUGUSTINE LLANERA LAURETA.pdf"
-              download
-              whileHover={{ translateX: -4, translateY: -4 }}
-              className="group flex items-center gap-2 px-10 py-5 bg-white text-black border-4 border-foreground font-black text-xl uppercase shadow-neo transition-all"
-            >
-              <Download size={24} strokeWidth={3} />
-              Resume
-            </motion.a> */}
           </div>
         </motion.div>
       </div>

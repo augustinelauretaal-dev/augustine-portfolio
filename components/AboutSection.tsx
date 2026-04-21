@@ -15,7 +15,7 @@ export default function AboutSection() {
   };
 
   return (
-<SectionWrapper id="about" className="bg-background relative overflow-hidden">
+    <SectionWrapper id="about" className="bg-background relative overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
         
         {/* Left Column: Profile Card */}
@@ -55,8 +55,9 @@ export default function AboutSection() {
                   <span>BS Information Technology</span>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 font-bold uppercase text-sm">
-                {/* Skills Section */}
+            </div>
+
+            {/* Skills Section */}
             <div className="space-y-8">
               <div className="space-y-4">
                 <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Frontend Tech</p>
@@ -64,12 +65,14 @@ export default function AboutSection() {
                   {skills.frontend.map((s) => <Badge key={s} text={s} variant="cyan" />)}
                 </div>
               </div>
+
               <div className="space-y-4">
                 <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Backend & Data</p>
                 <div className="flex flex-wrap gap-3">
                   {skills.backend.map((s) => <Badge key={s} text={s} variant="purple" />)}
                 </div>
               </div>
+
               <div className="space-y-4">
                 <p className="text-xs font-black uppercase tracking-[0.3em] text-foreground/40">Core Strengths</p>
                 <div className="flex flex-wrap gap-3">
@@ -77,10 +80,7 @@ export default function AboutSection() {
                 </div>
               </div>
             </div>
-
-              </div>
-            </div>
-          </motion.div>
+        </motion.div>
 
           {/* Right Column: Content */}
           <motion.div 
